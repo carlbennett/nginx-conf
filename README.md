@@ -41,6 +41,8 @@ The following commands assume you are logged in as `root` or are `sudo`ing as
 dnf install nginx
 ```
 
+\* If you are using CentOS, substitute `dnf` with `yum` in the command above.
+
 ### Setup the user and group
 ```
 usermod -u 48 nginx
