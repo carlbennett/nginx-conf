@@ -66,8 +66,8 @@ cp -r ./opt/carlbennett/nginx-www/ /opt/carlbennett/nginx-www
 
 ### File and directory permissions
 ```
-chown root:root -R /etc/nginx
-chown nginx:www-data -R /opt/carlbennett/nginx-www
+chown -R root:root /etc/nginx
+chown -R nginx:www-data /opt/carlbennett/nginx-www
 find /opt/carlbennett/nginx-www -type f -print0 | sudo xargs -0 chmod 664
 find /opt/carlbennett/nginx-www -type d -print0 | sudo xargs -0 chmod 775
 ```
