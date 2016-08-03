@@ -61,20 +61,21 @@ git clone git@github.com:carlbennett/nginx-conf.git
 ### Copy files to system
 ```
 cp -r ./etc/nginx/ /etc/nginx
-cp -r ./home/nginx/ /home/nginx
+cp -r ./opt/carlbennett/nginx-www/ /opt/carlbennett/nginx-www
 ```
 
 ### File and directory permissions
 ```
 chown root:root -R /etc/nginx
-chown nginx:www-data -R /home/nginx
-find /home/nginx -type f -print0 | sudo xargs -0 chmod 664
-find /home/nginx -type d -print0 | sudo xargs -0 chmod 775
+chown nginx:www-data -R /opt/carlbennett/nginx-www
+find /opt/carlbennett/nginx-www -type f -print0 | sudo xargs -0 chmod 664
+find /opt/carlbennett/nginx-www -type d -print0 | sudo xargs -0 chmod 775
 ```
 
 ### SELinux permissions
 ```
-restorecon -r /etc/nginx /home/nginx
+semanage fcontext -a -t httpd_sys_content_t /opt/carlbennett/nginx-www(/.*)?
+restorecon -r /etc/nginx /opt/carlbennett/nginx-www
 ```
 
 ### Configure nginx
