@@ -8,7 +8,7 @@ And thus, this configuration was born.
 
 It is based on the Fedora 21 x86\_64 nginx package and has been maintained at
 [carlbennett/nginx-conf](https://github.com/carlbennett/nginx-conf) since. It
-is fully compatible with Fedora 24 x86\_64 and CentOS 7.x x86\_64.
+is fully compatible with Fedora 25 x86\_64 and CentOS 7.x x86\_64.
 
 Recommended Nginx version: `1.8.0` or newer.
 
@@ -38,7 +38,7 @@ The following commands assume you are logged in as `root` or are `sudo`ing as
 
 ### Install nginx
 :warning: If you are using CentOS, substitute `dnf` with `yum` in the command
-above.
+below.
 
 ```sh
 dnf install nginx
