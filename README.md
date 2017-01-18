@@ -30,42 +30,45 @@ Recommended Nginx version: `1.8.0` or newer.
    server block.
 
 ## Installation
-These steps have been tested on Fedora 24 x86\_64, and may require minor
+These steps have been tested on Fedora 25 x86\_64, and may require minor
 changes to work on non-RHEL systems.
 
 The following commands assume you are logged in as `root` or are `sudo`ing as
 `root` before every command.
 
 ### Install nginx
-```
+:warning: If you are using CentOS, substitute `dnf` with `yum` in the command
+above.
+
+```sh
 dnf install nginx
 ```
 
-\* If you are using CentOS, substitute `dnf` with `yum` in the command above.
-
 ### Setup the user and group
-```
-usermod -u 48 nginx
-groupmod -g 48 nginx
+```sh
+userdel -r apache    # Only if you hate apache
+usermod -u 48 nginx  # Only if you hate apache
+groupmod -g 48 nginx # Only if you hate apache
 groupadd -r www-data
 usermod -aG www-data nginx
 usermod -aG www-data `whoami`
 ```
 
 ### Clone this repository
-```
+```sh
 cd ~
 git clone git@github.com:carlbennett/nginx-conf.git
 ```
 
 ### Copy files to system
-```
+```sh
 cp -r ./etc/nginx/ /etc/nginx
-cp -r ./opt/carlbennett/nginx-www/ /opt/carlbennett/nginx-www
+mkdir -p /opt/carlbennett/nginx-www && \
+  cp -r ./opt/carlbennett/nginx-www/ /opt/carlbennett/nginx-www
 ```
 
 ### File and directory permissions
-```
+```sh
 chown -R root:root /etc/nginx
 chown -R nginx:www-data /opt/carlbennett/nginx-www
 find /opt/carlbennett/nginx-www -type f -print0 | sudo xargs -0 chmod 664
@@ -73,7 +76,7 @@ find /opt/carlbennett/nginx-www -type d -print0 | sudo xargs -0 chmod 775
 ```
 
 ### SELinux permissions
-```
+```sh
 semanage fcontext -a -t httpd_sys_content_t /opt/carlbennett/nginx-www(/.*)?
 restorecon -r /etc/nginx /opt/carlbennett/nginx-www
 ```
@@ -82,7 +85,7 @@ restorecon -r /etc/nginx /opt/carlbennett/nginx-www
 You should now configure everything under `/etc/nginx` to your liking.
 
 ### Run nginx
-```
+```sh
 systemctl enable nginx
 systemctl start nginx
 ```
