@@ -2,7 +2,7 @@ server {
 
   listen       80;
   listen       [::]:80;
-  server_name  .php.example.com;
+  server_name  php.example.com;
 
   include      conf.d/error-pages.conf;
   include      conf.d/gzip.conf;
@@ -20,7 +20,7 @@ server {
 
   listen       443 ssl http2;
   listen       [::]:443 ssl http2;
-  server_name  .php.example.com;
+  server_name  php.example.com;
 
   include      conf.d/error-pages.conf;
   include      conf.d/gzip.conf;
@@ -32,7 +32,7 @@ server {
   set $PHP_SHORT_TAG       "Off";
   set $PHP_DATE_TIMEZONE   "Etc/UTC";
 
-  root   /opt/carlbennett/nginx-www/example-php;
+  root   /opt/carlbennett/nginx-www/php.example.com;
   index  index.php index.xml index.html index.htm;
 
   location ~ \.php$ {
@@ -43,10 +43,10 @@ server {
     fastcgi_intercept_errors      off;
     fastcgi_param                 PHP_VALUE
                                  "date.timezone = \"$PHP_DATE_TIMEZONE\"
-                                  error_reporting = \"$PHP_ERROR_REPORTING\"
+                                  display_errors = $PHP_DISPLAY_ERRORS
+                                  error_reporting = $PHP_ERROR_REPORTING
                                   newrelic.appname = \"$NEWRELIC_APPNAME\"
-                                  short_open_tag = \"$PHP_SHORT_TAG\"
-                                  display_errors = \"$PHP_DISPLAY_ERRORS\"";
+                                  short_open_tag = $PHP_SHORT_TAG";
     fastcgi_pass                  unix:/var/run/php-fpm/www.sock;
     fastcgi_temp_file_write_size  256k;
     include                       fastcgi.conf;
