@@ -23,7 +23,6 @@ server {
   server_name  php.example.com;
 
   include      conf.d/error-pages.conf;
-  include      conf.d/gzip.conf;
   include      conf.d/url-filter*.conf;
 
   set $NEWRELIC_APPNAME    "Example Application";
