@@ -10,7 +10,7 @@ It is based on the Fedora 21 x86\_64 nginx package and has been maintained at
 [carlbennett/nginx-conf](https://github.com/carlbennett/nginx-conf) since. It
 is fully compatible with Fedora 25 x86\_64 and CentOS 7.x x86\_64.
 
-Recommended Nginx version: `1.8.0` or newer.
+Recommended Nginx version: `1.10.2` or newer.
 
 ## Features
 - Global caching
