@@ -1,14 +1,18 @@
 # Nginx Configuration
 ## Summary
+This is a fully developed Nginx configuration ready for deployment in
+production environments. It is pre-configured to be scalable, efficient, and
+reliable.
+
+### Author's Notes
 [@carlbennett](https://github.com/carlbennett) wanted an nginx configuration
 that was both secure and modular enough that it could be put on any server,
-with minor tuning to just a few settings to make it work anywhere.
-
-And thus, this configuration was born.
+with minor tuning to just a few settings to make it work anywhere. And thus,
+this configuration was born.
 
 It is based on the Fedora 21 x86\_64 nginx package and has been maintained at
 [carlbennett/nginx-conf](https://github.com/carlbennett/nginx-conf) since. It
-is fully compatible with Fedora 25 x86\_64 and CentOS 7.x x86\_64.
+is fully compatible with Fedora 25 x86\_64 and CentOS 7.3 x86\_64.
 
 Recommended Nginx version: `1.10.2` or newer.
 
