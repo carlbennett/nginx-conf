@@ -18,20 +18,21 @@ Recommended Nginx version: `1.10.2` or newer.
 
 ## Features
 - Global caching
- - If included, tunes nginx to have browsers cache static resources.
+  - If included, tunes nginx to have browsers cache static resources.
 - Global Gzip compression
- - If included, common types of static resources will be compressed by nginx.
+  - If included, common types of static resources will be compressed by nginx.
 - Global URL filtering
- - If included, nginx will disconnect common types of attacks based on the URL,
-   instead of responding with an error page or content which could alert the
-   bad actor about your server, which would send an invite to come back later.
- - Can be extended upon very easily to block even more types of URLs.
+  - If included, nginx will disconnect common types of attacks based on the
+    URL, instead of responding with an error page or content which could alert
+    the bad actor about your server, which would send an invite to come back
+    later.
+  - Can be extended upon very easily to block even more types of URLs.
 - PHP support
- - If included, you can _and should_ define php error reporting and short tags
-   in your server block.
+  - If included, you can _and should_ define php error reporting and short tags
+    in your server block.
 - New Relic support
- - You can _and should_ define the application name for New Relic in your
-   server block.
+  - You can _and should_ define the application name for New Relic in your
+    server block.
 
 ## Installation
 These steps have been tested on Fedora 25 x86\_64, and may require minor
