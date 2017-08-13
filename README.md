@@ -82,7 +82,8 @@ find /opt/carlbennett/nginx-www -type d -print0 | sudo xargs -0 chmod 775
 
 ### SELinux permissions
 ```sh
-semanage fcontext -a -t httpd_sys_content_t /opt/carlbennett/nginx-www(/.*)?
+dnf install policycoreutils-python-utils
+semanage fcontext -a -t httpd_sys_content_t '/opt/carlbennett/nginx-www(/.*)?'
 restorecon -r /etc/nginx /opt/carlbennett/nginx-www
 ```
 
