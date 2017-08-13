@@ -50,10 +50,15 @@ dnf install nginx
 ```
 
 ### Setup the user and group
+If you wish to replace apache:
 ```sh
-userdel -r apache    # Only if you hate apache
-usermod -u 48 nginx  # Only if you hate apache
-groupmod -g 48 nginx # Only if you hate apache
+userdel -r apache
+usermod -u 48 nginx
+groupmod -g 48 nginx
+```
+
+Add permission group for web content:
+```
 groupadd -r www-data
 usermod -aG www-data nginx
 usermod -aG www-data `whoami`
