@@ -25,12 +25,6 @@ server {
   include conf.d/error-pages.conf;
   include conf.d/url-filter*.conf;
 
-  set $NEWRELIC_APPNAME    "Example Application";
-  set $PHP_DISPLAY_ERRORS  "On";
-  set $PHP_ERROR_REPORTING "24567"; # E_ALL & ~E_NOTICE & ~E_DEPRECATED
-  set $PHP_SHORT_TAG       "Off";
-  set $PHP_DATE_TIMEZONE   "Etc/UTC";
-
   root  /opt/carlbennett/nginx-www/php.example.com;
   index index.php index.xml index.html index.htm;
 
@@ -45,11 +39,10 @@ server {
     fastcgi_intercept_errors off;
 
     fastcgi_param PHP_VALUE
-                 "date.timezone = \"$PHP_DATE_TIMEZONE\"
-                  display_errors = $PHP_DISPLAY_ERRORS
-                  error_reporting = $PHP_ERROR_REPORTING
-                  newrelic.appname = \"$NEWRELIC_APPNAME\"
-                  short_open_tag = $PHP_SHORT_TAG";
+                 "date.timezone = \"Etc/UTC\"
+                  display_errors = On
+                  error_reporting = E_ALL & ~E_NOTICE
+                  short_open_tag = On";
 
     fastcgi_pass unix:/var/run/php-fpm/www.sock;
 
