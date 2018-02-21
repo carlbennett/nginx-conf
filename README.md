@@ -30,9 +30,7 @@ Recommended Nginx version: `1.10.2` or newer.
 - PHP support
   - If included, you can _and should_ define php error reporting and short tags
     in your server block.
-- New Relic support
-  - You can _and should_ define the application name for New Relic in your
-    server block.
+  - You can pass other php options via the PHP\_VALUE parameter too.
 
 ## Installation
 These steps have been tested on Fedora 25 x86\_64, and may require minor
