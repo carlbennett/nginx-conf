@@ -8,7 +8,7 @@ reliable.
 [@carlbennett](https://github.com/carlbennett) wanted an nginx configuration
 that was both secure and modular enough that it could be put on any server,
 with minor tuning to just a few settings to make it work anywhere. And thus,
-this configuration was born.
+this configuration was created.
 
 It is based on the Fedora 21 x86\_64 nginx package and has been maintained at
 [carlbennett/nginx-conf](https://github.com/carlbennett/nginx-conf) since. It
