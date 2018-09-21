@@ -1,69 +1,51 @@
-#!/usr/bin/env bash
-#
+#!/bin/bash
 
-echo 'This script may corrupt your system. No warranties are given, expressed or implied.' 1>&2
-
-if [ $EUID -ne 0 ]; then
-    echo 'You must run this script as root' 1>&2
-    exit 1
+printf "This script requires the root user and will change data on your system!\n" 1>&2
+read -p "Is this ok [y/N]: " PROMPT
+if [ "${PROMPT}" != "Y" ] && [ "${PROMPT}" != "y" ]; then
+  printf "Operation aborted.\n" 1>&2
+  exit 1
 fi
 
-ACTION="$1"
-NGINX_CONF_DIR="$2"
-
-[   -z "$NGINX_CONF_DIR" ] && NGINX_CONF_DIR='/etc/nginx'
-[ ! -d "$NGINX_CONF_DIR" ] && NGINX_CONF_DIR=''
-
-if [ -z "$ACTION" ]; then
-    echo "Usage: $0 <action> [install-dir]"
-    [ -n "$NGINX_CONF_DIR" ] && echo "Nginx config directory: $NGINX_CONF_DIR"
-    echo "Actions: install"
-    exit 1
+if [ "${EUID}" -ne 0 ]; then
+  printf "Error: Not running as root.\n" 1>&2
+  exit 1
 fi
-
-if [ ! -d "$NGINX_CONF_DIR" ]; then
-    echo 'Cannot find nginx directory, please halp' 1>&2
-    exit 1
-fi
-
-# ---
 
 set -e
 
-echo '[1/4] Prepare nginx config directory...' 1>&2
+printf "[1/8] Installing nginx...\n"
+PKGMGR="/usr/bin/dnf"
+[ ! -x "${PKGMGR}" ] && PKGMGR="/usr/bin/yum"
+if [ ! -x "${PKGMGR}" ]; then
+  printf "Error: Cannot find system package manager.\n" 1>&2
+  exit 1
+fi
+if [ "$(cat /etc/system-release)" == "CentOS*" ]; then
+  $PKGMGR --enablerepo=epel --assumeyes install nginx
+else
+  $PKGMGR --assumeyes install nginx
+fi
 
-pushd ./etc/nginx
-for filename in *; do
-    if [ -e "$NGINX_CONF_DIR/$filename" ]; then
-        if [ -e "$NGINX_CONF_DIR/$filename.orig" ]; then
-            echo "Error: dirty state found in [$NGINX_CONF_DIR]."
-            exit 1
-        fi
-        if [ -f "$NGINX_CONF_DIR/$filename" ]; then
-            cmp -s ./$filename $NGINX_CONF_DIR/$filename && continue
-        fi
-        mv -v $NGINX_CONF_DIR/$filename $NGINX_CONF_DIR/$filename.orig
-    fi
-done
-
-echo '[2/4] Copy contents to nginx config directory...' 1>&2
-
-for filename in *; do
-    cp -v -r ./$filename $NGINX_CONF_DIR/$filename;
-done
+printf "[2/8] Cloning repository into the system...\n"
+pushd "$(git rev-parse --show-toplevel)"
+rm -Rf ./var/run
+rm -Rf /etc/nginx/*
+cp -a ./etc/nginx/* /etc/nginx/
+cp -a ./home/nginx /home/nginx
+pushd /usr/share/nginx
+ln -s ../../../etc/nginx conf
+ln -s ../../../etc/nginx/conf.d conf.d
+ln -s ../../../var/log/nginx logs
+ln -s ../../../home/nginx www
+popd
 popd
 
-echo '[3/4] Create directories for html content...' 1>&2
+printf "[3/8] ...\n"
+printf "[4/8] ...\n"
+printf "[5/8] ...\n"
+printf "[6/8] ...\n"
+printf "[7/8] ...\n"
+printf "[8/8] ...\n"
 
-mkdir -v -p /opt/carlbennett/nginx-www
-
-echo '[4/4] Copy contents to [/opt/carlbennett/nginx-www]...' 1>&2
-
-pushd ./opt/carlbennett/nginx-www;
-for filename in *; do
-    cp -v -r ./$filename /opt/carlbennett/nginx-www/$filename;
-done
-popd
-
-echo 'Operation complete!' 1>&2
-
+printf "Operation complete!\n"
