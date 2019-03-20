@@ -4,6 +4,9 @@ This is a fully developed Nginx configuration ready for deployment in
 production environments. It is pre-configured to be scalable, efficient, secure,
 and reliable.
 
+![Nginx 1.13.0](https://img.shields.io/badge/nginx-1.13.0-green.svg)
+[![LICENSE](https://img.shields.io/github/license/carlbennett/nginx-conf.svg)](./LICENSE.txt)
+
 ### Author's Notes
 [@carlbennett](https://github.com/carlbennett) wanted an Nginx configuration
 that was both secure and modular enough that it could be put on any server,
