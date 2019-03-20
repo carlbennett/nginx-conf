@@ -1,20 +1,22 @@
 # Nginx Configuration
 ## Summary
 This is a fully developed Nginx configuration ready for deployment in
-production environments. It is pre-configured to be scalable, efficient, and
-reliable.
+production environments. It is pre-configured to be scalable, efficient, secure,
+and reliable.
 
 ### Author's Notes
-[@carlbennett](https://github.com/carlbennett) wanted an nginx configuration
+[@carlbennett](https://github.com/carlbennett) wanted an Nginx configuration
 that was both secure and modular enough that it could be put on any server,
 with minor tuning to just a few settings to make it work anywhere. And thus,
 this configuration was created.
 
-It is based on the Fedora 21 x86\_64 nginx package and has been maintained at
-[carlbennett/nginx-conf](https://github.com/carlbennett/nginx-conf) since. It
-is fully compatible with Fedora 25 x86\_64 and CentOS 7.3 x86\_64.
+It is based on the Fedora 29 x86\_64 Nginx packages and is maintained at
+[carlbennett/nginx-conf](https://github.com/carlbennett/nginx-conf). It
+is compatible with most Nginx installations, and works well on CentOS 7 when
+using [nginx.org's repos](http://nginx.org/en/linux_packages.html) instead of
+the default centos repos.
 
-Recommended Nginx version: `1.10.2` or newer.
+Recommended Nginx version: `1.13.0` or newer.
 
 ## Features
 - Global caching
@@ -33,7 +35,7 @@ Recommended Nginx version: `1.10.2` or newer.
   - You can pass other php options via the PHP\_VALUE parameter too.
 
 ## Installation
-These steps have been tested on Fedora 25 x86\_64, and may require minor
+These steps have been tested on Fedora 29 x86\_64, and may require minor
 changes to work on non-RHEL systems.
 
 The following commands assume you are logged in as `root` or are `sudo`ing as
