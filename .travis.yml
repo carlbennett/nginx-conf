@@ -1,0 +1,20 @@
+language: minimal
+install:
+  - sudo apt install curl gnupg2 ca-certificates lsb-release
+  - echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+    | sudo tee /etc/apt/sources.list.d/nginx.list
+  - curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+  - apt-key fingerprint ABF5BD827BD9BF62
+  - sudo apt update
+  - sudo apt install nginx
+before_script:
+  - sudo cp -rv ./etc/nginx /etc/
+  - sudo mkdir -pv /etc/pki
+  - sudo ln -sv '../ssl' /etc/pki/tls
+  - sudo cp -rv ./etc/pki/tls/* /etc/ssl/
+  - sudo ln -sv './default.crt' /etc/ssl/certs/example-www.crt
+  - sudo ln -sv './default.key' /etc/ssl/private/example-www.key
+script:
+  - sudo nginx -t
+after_failure:
+  - sudo cat /var/log/nginx/error.log
