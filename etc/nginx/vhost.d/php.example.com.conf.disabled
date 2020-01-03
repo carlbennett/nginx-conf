@@ -25,7 +25,7 @@ server {
   include conf.d/error-pages.conf;
   include conf.d/url-filter*.conf;
 
-  root  /opt/carlbennett/nginx-www/php.example.com;
+  root  /var/www/php.example.com;
   index index.php index.xml index.html index.htm;
 
   location ~ \.php$ {

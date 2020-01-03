@@ -55,15 +55,13 @@ popd
 
 echo '[3/4] Create directories for html content...' 1>&2
 
-mkdir -v -p /opt/carlbennett/nginx-www
+mkdir -v -p /var/www
 
-echo '[4/4] Copy contents to [/opt/carlbennett/nginx-www]...' 1>&2
+echo '[4/4] Copy contents to [/var/www]...' 1>&2
 
-pushd ./opt/carlbennett/nginx-www;
-for filename in *; do
-    cp -v -r ./$filename /opt/carlbennett/nginx-www/$filename;
+for filename in ./var/www/*; do
+    cp -v -r $filename /var/www/$filename;
 done
-popd
 
 echo 'Operation complete!' 1>&2
 

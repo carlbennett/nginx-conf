@@ -76,23 +76,25 @@ git clone git@github.com:carlbennett/nginx-conf.git
 ### Copy files to system
 ```sh
 cp -r ./etc/nginx/ /etc/nginx
-mkdir -p /opt/carlbennett/nginx-www && \
-  cp -r ./opt/carlbennett/nginx-www/ /opt/carlbennett/nginx-www
+mkdir -p /var/www && cp -r ./var/www/* /var/www
 ```
 
 ### File and directory permissions
 ```sh
 chown -R root:root /etc/nginx
-chown -R nginx:www-data /opt/carlbennett/nginx-www
-find /opt/carlbennett/nginx-www -type f -print0 | sudo xargs -0 chmod 664
-find /opt/carlbennett/nginx-www -type d -print0 | sudo xargs -0 chmod 775
+chown -R nginx:www-data /var/www
+find /var/www -type f -print0 | sudo xargs -0 chmod 664
+find /var/www -type d -print0 | sudo xargs -0 chmod 775
 ```
 
 ### SELinux permissions
+This is only necessary if using a different directory than `/var/www`. On
+RHEL-like systems with SELinux, `/var/www` is already configured properly.
+
 ```sh
 dnf install policycoreutils-python-utils
-semanage fcontext -a -t httpd_sys_content_t '/opt/carlbennett/nginx-www(/.*)?'
-restorecon -r /etc/nginx /opt/carlbennett/nginx-www
+semanage fcontext -a -t httpd_sys_content_t '/opt/other-www(/.*)?'
+restorecon -r /opt/other-www
 ```
 
 ### Configure nginx
