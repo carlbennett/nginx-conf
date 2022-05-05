@@ -70,7 +70,7 @@ usermod -aG www-data `whoami`
 ### Clone this repository
 ```sh
 cd ~
-git clone git@github.com:carlbennett/nginx-conf.git
+git clone git@github.com:carlbennett/nginx-conf.git && cd ./nginx-conf
 ```
 
 ### Copy files to system
@@ -95,6 +95,16 @@ RHEL-like systems with SELinux, `/var/www` is already configured properly.
 dnf install policycoreutils-python-utils
 semanage fcontext -a -t httpd_sys_content_t '/opt/other-www(/.*)?'
 restorecon -r /opt/other-www
+```
+
+### SELinux booleans
+If using nginx on a RHEL-like system with a backend like php-fpm, the following
+booleans become useful to enable network connectivity as the nginx/php-fpm user.
+
+```sh
+setsebool -P httpd_can_network_connect 1
+setsebool -P httpd_can_network_connect_db 1
+setsebool -P httpd_can_network_memcache 1
 ```
 
 ### Configure nginx
