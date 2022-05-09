@@ -87,16 +87,6 @@ find /var/www -type f -print0 | sudo xargs -0 chmod 664
 find /var/www -type d -print0 | sudo xargs -0 chmod 775
 ```
 
-### SELinux permissions
-This is only necessary if using a different directory than `/var/www`. On
-RHEL-like systems with SELinux, `/var/www` is already configured properly.
-
-```sh
-dnf install policycoreutils-python-utils
-semanage fcontext -a -t httpd_sys_content_t '/opt/other-www(/.*)?'
-restorecon -r /opt/other-www
-```
-
 ### SELinux booleans
 If using nginx on a RHEL-like system with a backend like php-fpm, the following
 booleans become useful to enable network connectivity as the nginx/php-fpm user.
@@ -106,6 +96,26 @@ setsebool -P httpd_can_network_connect 1
 setsebool -P httpd_can_network_connect_db 1
 setsebool -P httpd_can_network_memcache 1
 ```
+
+### SELinux file context
+If using nginx on a RHEL-like system with an alternate webroot, the following
+configures proper SELinux fcontext, which is necessary if not using `/var/www`.
+
+```sh
+dnf install policycoreutils-python-utils # provides semanage
+semanage fcontext -a -t httpd_sys_content_t '/opt/other-www(/.*)?'
+restorecon -r /opt/other-www
+```
+
+If there are directories which a backend needs write access to, be sure to use
+the fcontext `httpd_rw_sys_content_t` instead for such directories. The fcontext
+`httpd_sys_content_t` (as printed earlier) is for read-only content.
+
+In addition, there is also `httpd_sys_script_exec_t` for CGI/executable files,
+but this fcontext is less common and is already set for `/var/www/cgi-bin`.
+
+The following command lists all file contexts currently configured:
+`semanage fcontext -l | grep httpd`
 
 ### Configure nginx
 You should now configure everything under `/etc/nginx` to your liking.
