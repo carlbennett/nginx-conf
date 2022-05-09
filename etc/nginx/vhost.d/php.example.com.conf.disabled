@@ -1,7 +1,6 @@
 server {
-
   listen      80;
-  listen      [::]:80;
+  listen [::]:80;
   server_name php.example.com;
 
   include conf.d/error-pages.conf;
@@ -11,15 +10,13 @@ server {
   location / {
     return 301 https://$host$uri$is_args$args;
   }
-
 }
 server {
-
   ssl_certificate     /etc/pki/tls/certs/example-www.crt;
   ssl_certificate_key /etc/pki/tls/private/example-www.key;
 
   listen      443 ssl http2;
-  listen      [::]:443 ssl http2;
+  listen [::]:443 ssl http2;
   server_name php.example.com;
 
   include conf.d/error-pages.conf;
@@ -39,14 +36,13 @@ server {
     fastcgi_intercept_errors off;
 
     fastcgi_param PHP_VALUE
-                 "date.timezone = \"Etc/UTC\"
-                  display_errors = On
-                  error_reporting = E_ALL & ~E_NOTICE
-                  short_open_tag = On";
+       "date.timezone = Etc/UTC
+        display_errors = On
+        error_reporting = E_ALL & ~E_NOTICE
+        short_open_tag = On";
 
     fastcgi_pass unix:/var/run/php-fpm/www.sock;
 
     include fastcgi.conf;
   }
-
 }
