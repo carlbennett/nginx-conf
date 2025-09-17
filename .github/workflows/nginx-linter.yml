@@ -1,0 +1,53 @@
+# vim: set colorcolumn=:
+name: nginx-linter
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update apt cache for required prerequisite packages
+        run: sudo apt-get update
+
+      - name: Install required prerequisite packages
+        run: sudo apt-get install curl gnupg2 ca-certificates lsb-release
+
+      - name: Install nginx apt repository source
+        run: echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+          | sudo tee /etc/apt/sources.list.d/nginx.list
+
+      - name: Install nginx signing key and verify fingerprint
+        run: |
+          curl -fsSL https://nginx.org/keys/nginx_signing.key \
+            | gpg --dearmor \
+            | sudo tee /etc/apt/trusted.gpg.d/nginx_signing.gpg
+          gpg --no-default-keyring --keyring /etc/apt/trusted.gpg.d/nginx_signing.gpg --fingerprint ABF5BD827BD9BF62
+
+      - name: Update apt cache for nginx installation
+        run: sudo apt-get update
+
+      - name: Install nginx
+        run: |
+          sudo apt-get install nginx
+          getent group nginx || sudo groupadd -g 48 nginx
+          getent passwd nginx || sudo useradd -u 48 -g 48 -c 'Nginx web server' -d /var/lib/nginx -s /sbin/nologin nginx
+
+      - name: Copy configuration
+        run: |
+          sudo cp -rv ./etc/nginx /etc/
+          sudo mkdir -pv /etc/pki
+          sudo ln -sv ../ssl /etc/pki/tls
+          sudo cp -rv ./etc/pki/tls/* /etc/ssl/
+          sudo ln -sv ./default.crt /etc/ssl/certs/example-www.crt
+          sudo ln -sv ./default.key /etc/ssl/private/example-www.key
+          sudo ln -sv ca-certificates.crt /etc/ssl/certs/ca-bundle.trust.crt
+
+      - name: Validate configuration
+        run: sudo nginx -t
