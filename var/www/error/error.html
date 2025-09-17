@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title><!--# echo var="status" default="" --> <!--# echo var="status_text" default="Something went wrong" --> &ndash; nginx</title>
+<!--# if expr="$status = 502" -->    <meta http-equiv="Refresh" content="5"/><!--# endif -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/>
+  </head>
+  <body>
+    <div class="container p-3">
+      <div class="alert alert-danger">
+        <h1><!--# echo var="status" default="" --> <!--# echo var="status_text" default="Something went wrong" --></h1>
+        <p><!--# echo var="status_description" default="" --></p>
+      </div>
+      <hr/>
+      <div class="text-muted">
+        Go back to
+        <a class="btn btn-sm btn-primary" title="Go to the last page" href="javascript:history.go(-1);">Last page</a> or
+        <a class="btn btn-sm btn-secondary" title="Go to the main page" href="/">Main page</a>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"><![CDATA[]]></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"><![CDATA[]]></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"><![CDATA[]]></script>
+  </body>
+</html>
